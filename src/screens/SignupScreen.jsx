@@ -1,114 +1,111 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { ArrowLeft, Check, Eye, EyeOff } from 'lucide-react-native';
-import { COLORS, SPACING, SIZES } from '../constants/theme';
-import { usePagerNavigation } from '../navigation/HorizontalPager';
+import { useNavigation } from '@react-navigation/native';
 
 export const SignupScreen = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const { scrollToScreen, screens } = usePagerNavigation();
+    const navigation = useNavigation();
 
     const handleSignup = () => {
-        scrollToScreen(screens.VERIFICATION);
+        navigation.navigate('Verification');
     };
 
     const handleLogin = () => {
-        scrollToScreen(screens.SIGN_IN);
+        navigation.navigate('SignIn');
     };
 
     const handleBack = () => {
-        scrollToScreen(screens.SIGN_IN);
+        navigation.goBack();
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.content}>
-                <View style={styles.header}>
-                    <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-                        <ArrowLeft size={24} color="#000000" />
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.main}>
-                    <Text style={styles.title}>Create your account</Text>
-
-                    <TouchableOpacity style={styles.googleButton} onPress={handleSignup}>
-                        <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.divider}>
-                        <View style={styles.dividerLine} />
-                        <Text style={styles.dividerText}>OR CREATE WITH EMAIL</Text>
-                        <View style={styles.dividerLine} />
-                    </View>
-
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>USERNAME</Text>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                style={styles.input}
-                                value={username}
-                                onChangeText={setUsername}
-                                placeholderTextColor="#C7C7CC"
-                            />
-                            {username.length > 3 && (
-                                <Check size={20} color="#34C759" />
-                            )}
-                        </View>
-                    </View>
-
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>EMAIL</Text>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                style={styles.input}
-                                value={email}
-                                onChangeText={setEmail}
-                                placeholderTextColor="#C7C7CC"
-                            />
-                            {email.includes('@') && (
-                                <Check size={20} color="#34C759" />
-                            )}
-                        </View>
-                    </View>
-
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>PASSWORD</Text>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                style={styles.inputPassword}
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry={!showPassword}
-                                placeholderTextColor="#C7C7CC"
-                            />
-                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                {showPassword ? (
-                                    <EyeOff size={20} color="#8E8E93" />
-                                ) : (
-                                    <Eye size={20} color="#8E8E93" />
-                                )}
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-                        <Text style={styles.signupButtonText}>SIGN UP</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.footer}>
-                    <TouchableOpacity onPress={handleLogin}>
-                        <Text style={styles.footerText}>
-                            ALREADY HAVE AN ACCOUNT? <Text style={styles.footerLink}>LOGIN</Text>
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+                    <ArrowLeft size={24} color="#000000" />
+                </TouchableOpacity>
             </View>
-        </SafeAreaView>
+
+            <View style={styles.main}>
+                <Text style={styles.title}>Create your account</Text>
+
+                <TouchableOpacity style={styles.googleButton} onPress={handleSignup}>
+                    <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
+                </TouchableOpacity>
+
+                <View style={styles.divider}>
+                    <View style={styles.dividerLine} />
+                    <Text style={styles.dividerText}>OR CREATE WITH EMAIL</Text>
+                    <View style={styles.dividerLine} />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>USERNAME</Text>
+                    <View style={styles.inputWrapper}>
+                        <TextInput
+                            style={styles.input}
+                            value={username}
+                            onChangeText={setUsername}
+                            placeholderTextColor="#C7C7CC"
+                        />
+                        {username.length > 3 && (
+                            <Check size={20} color="#34C759" />
+                        )}
+                    </View>
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>EMAIL</Text>
+                    <View style={styles.inputWrapper}>
+                        <TextInput
+                            style={styles.input}
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholderTextColor="#C7C7CC"
+                        />
+                        {email.includes('@') && (
+                            <Check size={20} color="#34C759" />
+                        )}
+                    </View>
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>PASSWORD</Text>
+                    <View style={styles.inputWrapper}>
+                        <TextInput
+                            style={styles.inputPassword}
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry={!showPassword}
+                            placeholderTextColor="#C7C7CC"
+                        />
+                        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                            {showPassword ? (
+                                <EyeOff size={20} color="#8E8E93" />
+                            ) : (
+                                <Eye size={20} color="#8E8E93" />
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+                    <Text style={styles.signupButtonText}>SIGN UP</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.footer}>
+                <TouchableOpacity onPress={handleLogin}>
+                    <Text style={styles.footerText}>
+                        ALREADY HAVE AN ACCOUNT? <Text style={styles.footerLink}>LOGIN</Text>
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 };
 
@@ -116,9 +113,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
-    },
-    content: {
-        flex: 1,
         paddingHorizontal: 24,
     },
     header: {
@@ -132,10 +126,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
         elevation: 3,
     },
     main: {

@@ -1,14 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { HorizontalPager } from './src/navigation/HorizontalPager';
+import { AppNavigator } from './src/navigation/AppNavigator';
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <HorizontalPager />
+    <GestureHandlerRootView className="flex-1">
+      <AppNavigator />
       <StatusBar style="dark" />
     </GestureHandlerRootView>
   );
 }
-
