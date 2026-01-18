@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
-import { Home, Search, Calendar, User } from 'lucide-react-native';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, Image } from 'react-native';
+import { Search, Calendar, User } from 'lucide-react-native';
 import { COLORS, SPACING, SIZES } from '../constants/theme';
 
 export const HomeScreen = ({ navigation }) => {
@@ -27,7 +27,7 @@ export const HomeScreen = ({ navigation }) => {
                     <View style={styles.bottomNav}>
                         <View style={styles.navItem}>
                             <View style={styles.navButton}>
-                                <Home size={24} color={COLORS.text} fill={COLORS.accent} />
+                                <Image source={require('../assets/home.png')} style={{ width: 24, height: 24 }} />
                             </View>
                             <Text style={styles.navLabel}>Home</Text>
                         </View>

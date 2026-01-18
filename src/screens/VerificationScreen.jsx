@@ -25,8 +25,7 @@ export const VerificationScreen = () => {
 
                 <View style={styles.main}>
                     <Text style={styles.title}>
-                        <Text style={styles.titleAccent}>Turf Identifier System</Text>
-                        {'\n'}Verification
+                        Turf Identifier <Text style={styles.titleAccent}>System</Text> Verification
                     </Text>
 
                     <View style={styles.iconContainer}>
@@ -39,8 +38,7 @@ export const VerificationScreen = () => {
                     </View>
 
                     <Text style={styles.description}>
-                        We've sent you an email for verification.{'\n'}
-                        Please check your inbox.
+                        Please verify your email to proceed to the dashboard
                     </Text>
                 </View>
             </View>
@@ -68,11 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     },
     main: {
         flex: 1,
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: '#000000',
         textAlign: 'center',
         marginBottom: 48,

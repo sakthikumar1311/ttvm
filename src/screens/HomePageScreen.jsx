@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Home, Search, Calendar, User } from 'lucide-react-native';
-import { COLORS, SPACING, SIZES } from '../constants/theme';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { Search, Calendar, User } from 'lucide-react-native';
 
 export const HomePageScreen = () => {
     return (
@@ -13,10 +12,10 @@ export const HomePageScreen = () => {
             <SafeAreaView style={styles.container}>
                 <View style={styles.content}>
                     <View style={styles.main}>
-                        <View style={styles.textContainer}>
+                        <View style={styles.overlay}>
                             <Text style={styles.title}>
                                 Wherever You Play, Your{'\n'}
-                                <Text style={styles.titleAccent}>Health Defines Your Game.</Text>
+                                <Text style={styles.titleAccent}>Health</Text> Defines Your Game.
                             </Text>
                             <Text style={styles.subtitle}>
                                 Every match counts toward a healthier life.
@@ -27,7 +26,7 @@ export const HomePageScreen = () => {
                     <View style={styles.bottomNav}>
                         <TouchableOpacity style={styles.navItemActive}>
                             <View style={styles.activeTab}>
-                                <Home size={22} color="#000000" />
+                                <Image source={require('../../assets/home.png')} style={styles.homeIcon} />
                             </View>
                             <Text style={styles.navLabelActive}>Home</Text>
                         </TouchableOpacity>
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.25)',
     },
     content: {
         flex: 1,
@@ -70,15 +68,17 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingBottom: 40,
     },
-    textContainer: {
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        padding: 20,
-        borderRadius: 12,
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        paddingHorizontal: 24,
+        paddingTop: 24,
+        paddingBottom: 20,
+        borderRadius: 0,
     },
     title: {
         fontSize: 22,
-        fontWeight: 'bold',
-        color: '#000000',
+        fontWeight: '700',
+        color: '#FFFFFF',
         lineHeight: 30,
         marginBottom: 8,
     },
@@ -87,8 +87,9 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 13,
-        color: '#666666',
+        color: '#FFFFFF',
         lineHeight: 18,
+        opacity: 0.9,
     },
     bottomNav: {
         flexDirection: 'row',
@@ -111,6 +112,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 12,
+    },
+    homeIcon: {
+        width: 22,
+        height: 22,
+        tintColor: '#000000',
     },
     navLabelActive: {
         fontSize: 11,

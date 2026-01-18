@@ -1,27 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import { Play, Home, Search, Calendar, User } from 'lucide-react-native';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Plus } from 'lucide-react-native';
+import { usePagerNavigation } from '../navigation/PagerNavigationContext';
 
 export const HomeHeroScreen = () => {
+    const { scrollToScreen, screens } = usePagerNavigation();
+
+    const handleCameraPress = () => {
+        // Camera/Plus button action
+    };
+
     return (
         <ImageBackground
             source={{ uri: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800' }}
             style={styles.background}
             resizeMode="cover"
         >
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={styles.content}>
                     <View style={styles.main}>
-                        <View style={styles.circle}>
-                            <TouchableOpacity style={styles.playButton}>
-                                <Play size={32} color="#FFFFFF" fill="#FFFFFF" />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.textContainer}>
+                        <View style={styles.overlay}>
                             <Text style={styles.title}>
                                 Wherever You Play, Your{'\n'}
-                                <Text style={styles.titleAccent}>Health Defines Your Game.</Text>
+                                <Text style={styles.titleAccent}>Health</Text> Defines Your Game.
                             </Text>
                             <Text style={styles.subtitle}>
                                 Every match counts toward a healthier life.
@@ -29,28 +30,13 @@ export const HomeHeroScreen = () => {
                         </View>
                     </View>
 
-                    <View style={styles.bottomNav}>
-                        <TouchableOpacity style={styles.navItemActive}>
-                            <View style={styles.activeTab}>
-                                <Home size={22} color="#000000" />
-                            </View>
-                            <Text style={styles.navLabelActive}>Home</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.navItem}>
-                            <Search size={22} color="#FFFFFF" />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.navItem}>
-                            <Calendar size={22} color="#FFFFFF" />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.navItem}>
-                            <User size={22} color="#FFFFFF" />
+                    <View style={styles.cameraButtonContainer}>
+                        <TouchableOpacity style={styles.cameraButton} onPress={handleCameraPress}>
+                            <Plus size={32} color="#FFFFFF" strokeWidth={3} />
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </SafeAreaView>
         </ImageBackground>
     );
 };
@@ -63,7 +49,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.25)',
     },
     content: {
         flex: 1,
@@ -72,40 +57,20 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingBottom: 40,
     },
-    circle: {
-        width: 180,
-        height: 180,
-        borderRadius: 90,
-        borderWidth: 3,
-        borderColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 100,
-    },
-    playButton: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    textContainer: {
-        position: 'absolute',
-        bottom: 80,
-        left: 24,
-        right: 24,
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        padding: 20,
-        borderRadius: 12,
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        paddingHorizontal: 24,
+        paddingTop: 24,
+        paddingBottom: 20,
+        borderRadius: 0,
     },
     title: {
         fontSize: 22,
-        fontWeight: 'bold',
-        color: '#000000',
+        fontWeight: '700',
+        color: '#FFFFFF',
         lineHeight: 30,
         marginBottom: 8,
     },
@@ -114,35 +79,20 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 13,
-        color: '#666666',
-        lineHeight: 18,
-    },
-    bottomNav: {
-        flexDirection: 'row',
-        backgroundColor: '#1C1C1E',
-        borderRadius: 25,
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        marginBottom: 24,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    navItemActive: {
-        alignItems: 'center',
-    },
-    navItem: {
-        padding: 8,
-    },
-    activeTab: {
-        backgroundColor: '#BFFF00',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 12,
-    },
-    navLabelActive: {
-        fontSize: 11,
         color: '#FFFFFF',
-        marginTop: 4,
-        fontWeight: '500',
+        lineHeight: 18,
+        opacity: 0.9,
+    },
+    cameraButtonContainer: {
+        alignItems: 'center',
+        marginBottom: 24,
+    },
+    cameraButton: {
+        width: 72,
+        height: 72,
+        borderRadius: 36,
+        backgroundColor: '#1C1C1E',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

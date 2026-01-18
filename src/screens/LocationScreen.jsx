@@ -24,15 +24,24 @@ export const LocationScreen = () => {
                 </View>
 
                 <View style={styles.main}>
-                    <Text style={styles.title}>Enable precise location</Text>
+                    <Text style={styles.title}>
+                        Enable <Text style={styles.titleAccent}>precise location</Text>
+                    </Text>
 
                     <View style={styles.iconContainer}>
-                        <MapPin size={80} color="#000000" strokeWidth={1.5} />
+                        <View style={styles.mapIconWrapper}>
+                            <View style={styles.mapGrid}>
+                                <View style={styles.horizontalLine} />
+                                <View style={styles.verticalLine} />
+                            </View>
+                            <View style={styles.locationPin}>
+                                <MapPin size={24} color="#000000" fill="#000000" />
+                            </View>
+                        </View>
                     </View>
 
                     <Text style={styles.description}>
-                        You location will only be used for finding nearby{'\n'}
-                        sports facilities and matches.
+                        Your location will be used to show people near you.
                     </Text>
 
                     <TouchableOpacity style={styles.enableButton} onPress={handleEnable}>
@@ -40,7 +49,7 @@ export const LocationScreen = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.maybeLater} onPress={handleEnable}>
-                        <Text style={styles.maybeLaterText}>Maybe later</Text>
+                        <Text style={styles.maybeLaterText}>Remind me later</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -82,13 +91,55 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: '#000000',
         textAlign: 'center',
         marginBottom: 48,
     },
+    titleAccent: {
+        color: '#BFFF00',
+    },
     iconContainer: {
         marginBottom: 32,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    mapIconWrapper: {
+        width: 120,
+        height: 120,
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    mapGrid: {
+        width: 100,
+        height: 100,
+        borderWidth: 1.5,
+        borderColor: '#000000',
+        borderRadius: 8,
+        position: 'relative',
+        overflow: 'hidden',
+    },
+    horizontalLine: {
+        position: 'absolute',
+        width: 100,
+        height: 1,
+        backgroundColor: '#000000',
+        top: 50,
+        opacity: 0.3,
+    },
+    verticalLine: {
+        position: 'absolute',
+        width: 1,
+        height: 100,
+        backgroundColor: '#000000',
+        left: 50,
+        opacity: 0.3,
+    },
+    locationPin: {
+        position: 'absolute',
+        top: 35,
+        left: 38,
     },
     description: {
         fontSize: 14,

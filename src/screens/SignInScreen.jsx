@@ -1,102 +1,264 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { usePagerNavigation } from '../navigation/PagerNavigationContext';
 
 export const SignInScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const navigation = useNavigation();
+    const { scrollToScreen, screens } = usePagerNavigation();
 
     const handleLogin = () => {
-        navigation.navigate('Main');
+        scrollToScreen(screens.HOME_HERO);
     };
 
     const handleSignUp = () => {
-        navigation.navigate('SignUp');
+        scrollToScreen(screens.SIGN_UP);
     };
 
     const handleBack = () => {
-        navigation.goBack();
+        scrollToScreen(screens.HOME);
     };
 
     return (
-        <View className="flex-1 bg-white px-6">
-            <View className="pt-4 pb-4">
-                <TouchableOpacity
-                    className="w-11 h-11 bg-white rounded-2xl justify-center items-center shadow-md"
-                    onPress={handleBack}
-                >
-                    <ArrowLeft size={24} color="#000000" />
-                </TouchableOpacity>
-            </View>
-
-            <View className="flex-1">
-                <Text className="text-3xl font-bold text-black text-center mb-8">Welcome Back!</Text>
-
-                <TouchableOpacity
-                    className="h-14 bg-white border border-gray-300 rounded-2xl justify-center items-center mb-6"
-                    onPress={handleLogin}
-                >
-                    <Text className="text-base font-medium text-black uppercase tracking-wide">CONTINUE WITH GOOGLE</Text>
-                </TouchableOpacity>
-
-                <View className="flex-row items-center mb-6">
-                    <View className="flex-1 h-px bg-gray-300" />
-                    <Text className="text-xs text-gray-500 mx-3 uppercase tracking-wide">OR LOG IN WITH EMAIL</Text>
-                    <View className="flex-1 h-px bg-gray-300" />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.content}>
+                <View style={styles.header}>
+                    <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+                        <ArrowLeft size={24} color="#000000" />
+                    </TouchableOpacity>
                 </View>
 
-                <View className="mb-5">
-                    <Text className="text-xs text-gray-500 mb-2 uppercase tracking-wide font-medium">EMAIL</Text>
-                    <TextInput
-                        className="border-b border-gray-300 pb-3 text-base text-black"
-                        value={email}
-                        onChangeText={setEmail}
-                        placeholderTextColor="#C7C7CC"
-                    />
-                </View>
+                <View style={styles.main}>
+                    <Text style={styles.title}>
+                        Welcome <Text style={styles.titleAccent}>Back!</Text>
+                    </Text>
 
-                <View className="mb-5">
-                    <Text className="text-xs text-gray-500 mb-2 uppercase tracking-wide font-medium">PASSWORD</Text>
-                    <View className="flex-row items-center border-b border-gray-300">
+                    <TouchableOpacity
+                        style={styles.googleButton}
+                        onPress={handleLogin}
+                    >
+                        <View style={styles.googleIconContainer}>
+                            <Text style={styles.googleIcon}>G</Text>
+                        </View>
+                        <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.divider}>
+                        <View style={styles.dividerLine} />
+                        <Text style={styles.dividerText}>OR LOG IN WITH EMAIL</Text>
+                        <View style={styles.dividerLine} />
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>EMAIL</Text>
                         <TextInput
-                            className="flex-1 pb-3 text-base text-black"
-                            value={password}
-                            onChangeText={setPassword}
-                            secureTextEntry={!showPassword}
+                            style={styles.input}
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholder=""
                             placeholderTextColor="#C7C7CC"
                         />
-                        <TouchableOpacity className="p-2" onPress={() => setShowPassword(!showPassword)}>
-                            {showPassword ? (
-                                <EyeOff size={20} color="#8E8E93" />
-                            ) : (
-                                <Eye size={20} color="#8E8E93" />
-                            )}
-                        </TouchableOpacity>
                     </View>
+
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>PASSWORD</Text>
+                        <View style={styles.passwordWrapper}>
+                            <TextInput
+                                style={styles.passwordInput}
+                                value={password}
+                                onChangeText={setPassword}
+                                secureTextEntry={!showPassword}
+                                placeholder=""
+                                placeholderTextColor="#C7C7CC"
+                            />
+                            <TouchableOpacity style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
+                                {showPassword ? (
+                                    <EyeOff size={20} color="#8E8E93" />
+                                ) : (
+                                    <Eye size={20} color="#8E8E93" />
+                                )}
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <TouchableOpacity
+                        style={styles.loginButton}
+                        onPress={handleLogin}
+                    >
+                        <Text style={styles.loginButtonText}>LOG IN</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.forgotPassword}>
+                        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                    </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity
-                    className="h-14 bg-black rounded-2xl justify-center items-center mb-4"
-                    onPress={handleLogin}
-                >
-                    <Text className="text-lg font-semibold text-white uppercase tracking-wide">LOG IN</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity className="items-center py-3">
-                    <Text className="text-base text-gray-500">Forgot Password?</Text>
-                </TouchableOpacity>
+                <View style={styles.footer}>
+                    <TouchableOpacity onPress={handleSignUp}>
+                        <Text style={styles.footerText}>
+                            CREATE NEW ACCOUNT <Text style={styles.footerLink}>SIGN UP</Text>
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-
-            <View className="pb-8 items-center">
-                <TouchableOpacity onPress={handleSignUp}>
-                    <Text className="text-sm text-gray-500">
-                        CREATE NEW ACCOUNT <Text className="text-black font-semibold">SIGN UP</Text>
-                    </Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </SafeAreaView>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+    },
+    content: {
+        flex: 1,
+        paddingHorizontal: 24,
+    },
+    header: {
+        paddingTop: 16,
+        paddingBottom: 16,
+    },
+    backButton: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    main: {
+        flex: 1,
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: '700',
+        color: '#000000',
+        textAlign: 'center',
+        marginBottom: 32,
+    },
+    titleAccent: {
+        color: '#BFFF00',
+    },
+    googleButton: {
+        height: 56,
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#DADCE0',
+        borderRadius: 25,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 24,
+    },
+    googleIconContainer: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: '#4285F4',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+    },
+    googleIcon: {
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontWeight: '700',
+    },
+    googleText: {
+        fontSize: 14,
+        fontWeight: '500',
+        color: '#000000',
+        letterSpacing: 0.5,
+    },
+    divider: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 24,
+    },
+    dividerLine: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#E5E5EA',
+    },
+    dividerText: {
+        fontSize: 11,
+        color: '#8E8E93',
+        marginHorizontal: 12,
+        letterSpacing: 0.5,
+    },
+    inputContainer: {
+        marginBottom: 20,
+    },
+    label: {
+        fontSize: 12,
+        color: '#8E8E93',
+        marginBottom: 8,
+        letterSpacing: 0.5,
+        fontWeight: '500',
+    },
+    input: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#E5E5EA',
+        paddingVertical: 12,
+        fontSize: 16,
+        color: '#000000',
+    },
+    passwordWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#E5E5EA',
+    },
+    passwordInput: {
+        flex: 1,
+        paddingVertical: 12,
+        fontSize: 16,
+        color: '#000000',
+    },
+    eyeButton: {
+        padding: 8,
+    },
+    loginButton: {
+        height: 56,
+        backgroundColor: '#1C1C1E',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 12,
+        marginBottom: 16,
+    },
+    loginButtonText: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#FFFFFF',
+        letterSpacing: 0.5,
+    },
+    forgotPassword: {
+        alignItems: 'center',
+        paddingVertical: 12,
+    },
+    forgotPasswordText: {
+        fontSize: 16,
+        color: '#8E8E93',
+    },
+    footer: {
+        paddingBottom: 32,
+        alignItems: 'center',
+    },
+    footerText: {
+        fontSize: 13,
+        color: '#8E8E93',
+        letterSpacing: 0.3,
+    },
+    footerLink: {
+        color: '#000000',
+        fontWeight: '600',
+    },
+});

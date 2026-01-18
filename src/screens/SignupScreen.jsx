@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { ArrowLeft, Check, Eye, EyeOff } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { usePagerNavigation } from '../navigation/PagerNavigationContext';
 
 export const SignupScreen = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const navigation = useNavigation();
+    const { scrollToScreen, screens } = usePagerNavigation();
 
     const handleSignup = () => {
-        navigation.navigate('Verification');
+        scrollToScreen(screens.VERIFICATION);
     };
 
     const handleLogin = () => {
-        navigation.navigate('SignIn');
+        scrollToScreen(screens.SIGN_IN);
     };
 
     const handleBack = () => {
-        navigation.goBack();
+        scrollToScreen(screens.HOME);
     };
 
     return (
@@ -31,9 +31,14 @@ export const SignupScreen = () => {
             </View>
 
             <View style={styles.main}>
-                <Text style={styles.title}>Create your account</Text>
+                <Text style={styles.title}>
+                    Create <Text style={styles.titleAccent}>your account</Text>
+                </Text>
 
                 <TouchableOpacity style={styles.googleButton} onPress={handleSignup}>
+                    <View style={styles.googleIconContainer}>
+                        <Text style={styles.googleIcon}>G</Text>
+                    </View>
                     <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
                 </TouchableOpacity>
 
@@ -134,10 +139,13 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: '#000000',
         textAlign: 'center',
         marginBottom: 32,
+    },
+    titleAccent: {
+        color: '#BFFF00',
     },
     googleButton: {
         height: 56,
@@ -145,9 +153,24 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#DADCE0',
         borderRadius: 25,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 24,
+    },
+    googleIconContainer: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: '#4285F4',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+    },
+    googleIcon: {
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontWeight: '700',
     },
     googleText: {
         fontSize: 14,
