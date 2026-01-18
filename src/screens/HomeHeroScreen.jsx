@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Play } from 'lucide-react-native';
-import { COLORS, SPACING, SIZES } from '../constants/theme';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { Play, Home, Search, Calendar, User } from 'lucide-react-native';
 
 export const HomeHeroScreen = () => {
     return (
@@ -10,7 +9,7 @@ export const HomeHeroScreen = () => {
             style={styles.background}
             resizeMode="cover"
         >
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.content}>
                     <View style={styles.main}>
                         <View style={styles.circle}>
@@ -29,8 +28,29 @@ export const HomeHeroScreen = () => {
                             </Text>
                         </View>
                     </View>
+
+                    <View style={styles.bottomNav}>
+                        <TouchableOpacity style={styles.navItemActive}>
+                            <View style={styles.activeTab}>
+                                <Home size={22} color="#000000" />
+                            </View>
+                            <Text style={styles.navLabelActive}>Home</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.navItem}>
+                            <Search size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.navItem}>
+                            <Calendar size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.navItem}>
+                            <User size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </SafeAreaView>
+            </View>
         </ImageBackground>
     );
 };
@@ -48,6 +68,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         paddingHorizontal: 24,
+        justifyContent: 'space-between',
     },
     main: {
         flex: 1,
@@ -95,5 +116,33 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#666666',
         lineHeight: 18,
+    },
+    bottomNav: {
+        flexDirection: 'row',
+        backgroundColor: '#1C1C1E',
+        borderRadius: 25,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        marginBottom: 24,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    navItemActive: {
+        alignItems: 'center',
+    },
+    navItem: {
+        padding: 8,
+    },
+    activeTab: {
+        backgroundColor: '#BFFF00',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
+    },
+    navLabelActive: {
+        fontSize: 11,
+        color: '#FFFFFF',
+        marginTop: 4,
+        fontWeight: '500',
     },
 });

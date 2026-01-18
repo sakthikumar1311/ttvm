@@ -1,4 +1,4 @@
-import React, { useRef, createContext, useContext } from 'react';
+import React, { useRef } from 'react';
 import { View, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { HomePageScreen } from '../screens/HomePageScreen';
 import { SignInScreen } from '../screens/SignInScreen';
@@ -6,19 +6,9 @@ import { SignupScreen } from '../screens/SignupScreen';
 import { VerificationScreen } from '../screens/VerificationScreen';
 import { LocationScreen } from '../screens/LocationScreen';
 import { HomeHeroScreen } from '../screens/HomeHeroScreen';
+import { PagerNavigationProvider } from './PagerNavigationContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
-// Create navigation context
-const PagerNavigationContext = createContext(null);
-
-export const usePagerNavigation = () => {
-    const context = useContext(PagerNavigationContext);
-    if (!context) {
-        return { scrollToScreen: () => { } };
-    }
-    return context;
-};
 
 export const HorizontalPager = () => {
     const scrollViewRef = useRef(null);
@@ -46,7 +36,7 @@ export const HorizontalPager = () => {
     };
 
     return (
-        <PagerNavigationContext.Provider value={navigationValue}>
+        <PagerNavigationProvider value={navigationValue}>
             <ScrollView
                 ref={scrollViewRef}
                 horizontal
@@ -77,7 +67,7 @@ export const HorizontalPager = () => {
                     <HomeHeroScreen />
                 </View>
             </ScrollView>
-        </PagerNavigationContext.Provider>
+        </PagerNavigationProvider>
     );
 };
 

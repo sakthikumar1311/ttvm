@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { ArrowLeft, MapPin } from 'lucide-react-native';
 import { COLORS, SPACING, SIZES } from '../constants/theme';
-import { usePagerNavigation } from '../navigation/HorizontalPager';
+import { usePagerNavigation } from '../navigation/PagerNavigationContext';
 
 export const LocationScreen = () => {
     const { scrollToScreen, screens } = usePagerNavigation();
