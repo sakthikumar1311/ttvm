@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, TouchableOpacity, TextInput } from 'react-native';
-import { X, Check, Eye, EyeOff } from 'lucide-react-native';
+import { X, Eye, EyeOff } from 'lucide-react-native';
 
-export const SignupScreen = ({ navigation }) => {
-    const [username, setUsername] = useState('');
+export const SignInScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSignup = () => {
-        navigation?.navigate('Verification');
+    const handleLogin = () => {
+        navigation?.navigate('Main');
     };
 
     const handleGoogleSignIn = () => {
-        navigation?.navigate('Verification');
+        navigation?.navigate('Main');
     };
 
-    const handleLogin = () => {
-        navigation?.navigate('SignIn');
+    const handleSignUp = () => {
+        navigation?.navigate('SignUp');
     };
 
     const handleBack = () => {
         navigation?.goBack();
     };
-
-    const isUsernameValid = username.length > 3;
-    const isEmailValid = email.includes('@') && email.includes('.');
-    const isPasswordValid = password.length > 6;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -34,7 +29,7 @@ export const SignupScreen = ({ navigation }) => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.content}
             >
-            <View style={styles.header}>
+                <View style={styles.header}>
                     <TouchableOpacity 
                         style={styles.backButton} 
                         onPress={handleBack}
@@ -43,11 +38,11 @@ export const SignupScreen = ({ navigation }) => {
                         <View style={styles.backButtonInner}>
                             <X size={20} color="#FFFFFF" strokeWidth={2.5} />
                         </View>
-                </TouchableOpacity>
-            </View>
+                    </TouchableOpacity>
+                </View>
 
-            <View style={styles.main}>
-                <Text style={styles.title}>Create your account</Text>
+                <View style={styles.main}>
+                    <Text style={styles.title}>Welcome Back!</Text>
 
                     <TouchableOpacity 
                         style={styles.googleButton}
@@ -57,95 +52,72 @@ export const SignupScreen = ({ navigation }) => {
                         <View style={styles.googleIcon}>
                             <Text style={styles.googleG}>G</Text>
                         </View>
-                    <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
-                </TouchableOpacity>
+                        <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
+                    </TouchableOpacity>
 
-                <View style={styles.divider}>
-                    <View style={styles.dividerLine} />
-                    <Text style={styles.dividerText}>OR CREATE WITH EMAIL</Text>
-                    <View style={styles.dividerLine} />
-                </View>
-
-                    <View style={styles.inputSection}>
-                        <Text style={styles.label}>USERNAME</Text>
-                <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.input}
-                                placeholder=""
-                                placeholderTextColor="#C7C7CC"
-                            value={username}
-                            onChangeText={setUsername}
-                                autoCapitalize="none"
-                        />
-                            {isUsernameValid && (
-                                <Check size={20} color="#34C759" style={styles.checkIcon} />
-                        )}
+                    <View style={styles.divider}>
+                        <View style={styles.dividerLine} />
+                        <Text style={styles.dividerText}>OR LOG IN WITH EMAIL</Text>
+                        <View style={styles.dividerLine} />
                     </View>
-                </View>
 
                     <View style={styles.inputSection}>
                         <Text style={styles.label}>EMAIL</Text>
-                <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.input}
-                                placeholder=""
-                                placeholderTextColor="#C7C7CC"
+                            placeholder=""
+                            placeholderTextColor="#C7C7CC"
                             value={email}
                             onChangeText={setEmail}
-                                keyboardType="email-address"
-                                autoCapitalize="none"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
                         />
-                            {isEmailValid && (
-                                <Check size={20} color="#34C759" style={styles.checkIcon} />
-                        )}
                     </View>
-                </View>
 
                     <View style={styles.inputSection}>
-                    <Text style={styles.label}>PASSWORD</Text>
+                        <Text style={styles.label}>PASSWORD</Text>
                         <View style={styles.passwordContainer}>
-                        <TextInput
+                            <TextInput
                                 style={styles.passwordInput}
                                 placeholder=""
                                 placeholderTextColor="#C7C7CC"
-                            value={password}
-                            onChangeText={setPassword}
-                            secureTextEntry={!showPassword}
+                                value={password}
+                                onChangeText={setPassword}
+                                secureTextEntry={!showPassword}
                             />
-                            <View style={styles.passwordIcons}>
-                                {isPasswordValid && (
-                                    <Check size={20} color="#34C759" style={styles.checkIcon} />
+                            <TouchableOpacity 
+                                onPress={() => setShowPassword(!showPassword)}
+                                style={styles.passwordToggle}
+                            >
+                                {showPassword ? (
+                                    <EyeOff size={20} color="#8E8E93" />
+                                ) : (
+                                    <Eye size={20} color="#8E8E93" />
                                 )}
-                                <TouchableOpacity 
-                                    onPress={() => setShowPassword(!showPassword)}
-                                    style={styles.passwordToggle}
-                                >
-                            {showPassword ? (
-                                <EyeOff size={20} color="#8E8E93" />
-                            ) : (
-                                <Eye size={20} color="#8E8E93" />
-                            )}
-                        </TouchableOpacity>
-                            </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
 
                     <TouchableOpacity 
-                        style={styles.signupButton}
-                        onPress={handleSignup}
+                        style={styles.loginButton}
+                        onPress={handleLogin}
                         activeOpacity={0.8}
                     >
-                    <Text style={styles.signupButtonText}>SIGN UP</Text>
-                </TouchableOpacity>
-            </View>
+                        <Text style={styles.loginButtonText}>LOG IN</Text>
+                    </TouchableOpacity>
 
-            <View style={styles.footer}>
-                <TouchableOpacity onPress={handleLogin}>
-                    <Text style={styles.footerText}>
-                        ALREADY HAVE AN ACCOUNT? <Text style={styles.footerLink}>LOGIN</Text>
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity style={styles.forgotPassword}>
+                        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.footer}>
+                    <TouchableOpacity onPress={handleSignUp}>
+                        <Text style={styles.signupText}>
+                            CREATE NEW ACCOUNT <Text style={styles.signupLink}>SIGN UP</Text>
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
@@ -252,17 +224,12 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         textTransform: 'uppercase',
     },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: '#E5E5EA',
-    },
     input: {
-        flex: 1,
         fontSize: 16,
         color: '#000000',
         paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#E5E5EA',
     },
     passwordContainer: {
         flexDirection: 'row',
@@ -276,40 +243,42 @@ const styles = StyleSheet.create({
         color: '#000000',
         paddingVertical: 12,
     },
-    passwordIcons: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    checkIcon: {
-        marginRight: 8,
-    },
     passwordToggle: {
         padding: 4,
     },
-    signupButton: {
+    loginButton: {
         height: 56,
         backgroundColor: '#1C1C1E',
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 12,
+        marginBottom: 16,
     },
-    signupButtonText: {
+    loginButtonText: {
         fontSize: 16,
         fontWeight: '600',
         color: '#FFFFFF',
         letterSpacing: 0.5,
     },
+    forgotPassword: {
+        alignItems: 'center',
+        padding: 12,
+    },
+    forgotPasswordText: {
+        fontSize: 14,
+        color: '#8E8E93',
+    },
     footer: {
         paddingBottom: 32,
         alignItems: 'center',
     },
-    footerText: {
+    signupText: {
         fontSize: 13,
         color: '#8E8E93',
         letterSpacing: 0.3,
     },
-    footerLink: {
+    signupLink: {
         color: '#000000',
         fontWeight: '600',
     },

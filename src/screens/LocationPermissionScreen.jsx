@@ -1,14 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
-import { X, Mail, CheckCircle } from 'lucide-react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ImageBackground } from 'react-native';
+import { X, MapPin } from 'lucide-react-native';
 
-export const VerificationScreen = ({ navigation }) => {
+export const LocationPermissionScreen = ({ navigation }) => {
     const handleBack = () => {
         navigation?.goBack();
     };
 
-    const handleContinue = () => {
-        navigation?.navigate('LocationPermission');
+    const handleEnable = () => {
+        navigation?.navigate('Main');
+    };
+
+    const handleRemindLater = () => {
+        navigation?.navigate('Main');
     };
 
     return (
@@ -28,29 +32,40 @@ export const VerificationScreen = ({ navigation }) => {
 
                 <View style={styles.main}>
                     <Text style={styles.title}>
-                        <Text style={styles.titleAccent}>Turf Identifier System</Text>
-                        {'\n'}Verification
+                        <Text style={styles.titleAccent}>Enable precise location</Text>
                     </Text>
 
                     <View style={styles.iconContainer}>
-                        <View style={styles.iconWrapper}>
-                            <Mail size={64} color="#000000" strokeWidth={1.5} />
-                            <View style={styles.checkmarkBadge}>
-                                <CheckCircle size={28} color="#34C759" fill="#34C759" />
-                            </View>
+                        <View style={styles.iconBackground}>
+                            <ImageBackground
+                                source={{ uri: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=200&q=80' }}
+                                style={styles.fieldBackground}
+                                resizeMode="cover"
+                            >
+                                <View style={styles.mapPinContainer}>
+                                    <MapPin size={48} color="#000000" strokeWidth={2} fill="none" />
+                                </View>
+                            </ImageBackground>
                         </View>
                     </View>
 
                     <Text style={styles.description}>
-                        Please verify your email to proceed to the dashboard.
+                        Your location will be used to show people near you.
                     </Text>
 
                     <TouchableOpacity 
-                        style={styles.continueButton}
-                        onPress={handleContinue}
+                        style={styles.enableButton}
+                        onPress={handleEnable}
                         activeOpacity={0.8}
                     >
-                        <Text style={styles.continueButtonText}>Continue</Text>
+                        <Text style={styles.enableButtonText}>Enable Now</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity 
+                        style={styles.remindLater}
+                        onPress={handleRemindLater}
+                    >
+                        <Text style={styles.remindLaterText}>Remind me later</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -92,7 +107,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 80,
+        paddingBottom: 40,
     },
     title: {
         fontSize: 24,
@@ -111,21 +126,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    iconWrapper: {
-        position: 'relative',
-        width: 120,
-        height: 120,
+    iconBackground: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        overflow: 'hidden',
+    },
+    fieldBackground: {
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    checkmarkBadge: {
-        position: 'absolute',
-        bottom: 5,
-        right: 5,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 14,
-        width: 28,
-        height: 28,
+    mapPinContainer: {
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -134,22 +147,30 @@ const styles = StyleSheet.create({
         color: '#8E8E93',
         textAlign: 'center',
         lineHeight: 20,
-        paddingHorizontal: 24,
         marginBottom: 48,
+        paddingHorizontal: 24,
     },
-    continueButton: {
+    enableButton: {
         width: '100%',
         height: 56,
         backgroundColor: '#1C1C1E',
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 24,
+        marginBottom: 16,
     },
-    continueButtonText: {
+    enableButtonText: {
         fontSize: 16,
         fontWeight: '600',
         color: '#FFFFFF',
         letterSpacing: 0.5,
+    },
+    remindLater: {
+        padding: 12,
+    },
+    remindLaterText: {
+        fontSize: 14,
+        color: '#8E8E93',
+        textAlign: 'center',
     },
 });

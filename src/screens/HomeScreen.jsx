@@ -1,86 +1,123 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React from 'react';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Home, Search, Calendar, User } from 'lucide-react-native';
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1 }}>
-      <ImageBackground
-        source={{
-          uri: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800",
-        }}
-        style={styles.background}
-        resizeMode="cover"
-      >
-        {/* Bottom White Card */}
-        <View style={styles.card}>
-          <Text style={styles.title}>
-            Wherever You Play, Your{" "}
-            <Text style={styles.highlight}>Health</Text> Defines Your Game.
-          </Text>
+export const HomeScreen = ({ navigation }) => {
+    return (
+        <ImageBackground
+            source={{ uri: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80' }}
+            style={styles.background}
+            resizeMode="cover"
+        >
+            <SafeAreaView style={styles.container}>
+                <View style={styles.content}>
+                    <View style={styles.main}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.title}>
+                                Wherever You Play, Your{' '}
+                                <Text style={styles.titleAccent}>Health</Text>
+                                {' '}Defines Your Game.
+                            </Text>
+                            <Text style={styles.subtitle}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </Text>
+                        </View>
+                    </View>
 
-          <Text style={styles.subtitle}>
-            Every match counts toward a healthier life.
-          </Text>
+                    <View style={styles.bottomNav}>
+                        <TouchableOpacity style={styles.navItemActive}>
+                            <View style={styles.activeTab}>
+                                <Home size={22} color="#000000" />
+                            </View>
+                            <Text style={styles.navLabelActive}>Home</Text>
+                        </TouchableOpacity>
 
-          {/* Circle Button → LOGIN */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Ionicons name="arrow-forward" size={22} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </View>
-  );
-}
+                        <TouchableOpacity style={styles.navItem}>
+                            <Search size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
 
-export default HomeScreen;
+                        <TouchableOpacity style={styles.navItem}>
+                            <Calendar size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.navItem}>
+                            <User size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </SafeAreaView>
+        </ImageBackground>
+    );
+};
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
-  card: {
-    backgroundColor: "#ffffff",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingVertical: 28,
-    paddingHorizontal: 22,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "700",
-    textAlign: "center",
-    color: "#111",
-  },
-  highlight: {
-    color: "#9BE11F",
-    fontWeight: "800",
-  },
-  subtitle: {
-    marginTop: 10,
-    fontSize: 14,
-    color: "#777",
-    textAlign: "center",
-  },
-  button: {
-    marginTop: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#000",
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 6,
-  },
+    background: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+    },
+    container: {
+        flex: 1,
+    },
+    content: {
+        flex: 1,
+        paddingHorizontal: 24,
+        justifyContent: 'space-between',
+    },
+    main: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        paddingBottom: 40,
+    },
+    textContainer: {
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        padding: 20,
+        borderRadius: 12,
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#000000',
+        lineHeight: 30,
+        marginBottom: 8,
+    },
+    titleAccent: {
+        color: '#BFFF00',
+        fontWeight: '700',
+    },
+    subtitle: {
+        fontSize: 13,
+        color: '#8E8E93',
+        lineHeight: 18,
+        marginTop: 4,
+    },
+    bottomNav: {
+        flexDirection: 'row',
+        backgroundColor: '#1C1C1E',
+        borderRadius: 25,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        marginBottom: 24,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    navItemActive: {
+        alignItems: 'center',
+    },
+    navItem: {
+        padding: 8,
+    },
+    activeTab: {
+        backgroundColor: '#BFFF00',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
+    },
+    navLabelActive: {
+        fontSize: 11,
+        color: '#FFFFFF',
+        marginTop: 4,
+        fontWeight: '500',
+    },
 });
