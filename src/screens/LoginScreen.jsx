@@ -46,10 +46,10 @@ export const LoginScreen = ({ navigation }) => {
 
         {/* MAIN CONTENT */}
         <View style={styles.main}>
-          <Text style={styles.title}>Welcome Back!</Text>
+          <Text style={styles.title}>Welcome!</Text>
 
           <CustomButton
-            title="CONTINUE WITH GOOGLE"
+            title="CONTINUE WIT GOOGLE"
             onPress={handleGoogleSignIn}
             variant="google"
             style={styles.googleButton}
