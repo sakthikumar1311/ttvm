@@ -1,35 +1,39 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
-import { ArrowLeft, Mail, CheckCircle } from 'lucide-react-native';
-import { COLORS, SPACING, SIZES } from '../constants/theme';
-import { usePagerNavigation } from '../navigation/PagerNavigationContext';
+import { X, Mail, CheckCircle } from 'lucide-react-native';
 
-export const VerificationScreen = () => {
-    const { scrollToScreen, screens } = usePagerNavigation();
-
+export const VerificationScreen = ({ navigation }) => {
     const handleBack = () => {
-        scrollToScreen(screens.SIGN_UP);
+        navigation?.goBack();
     };
 
     const handleContinue = () => {
-        scrollToScreen(screens.LOCATION);
+        navigation?.navigate('LocationPermission');
     };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
                 <View style={styles.header}>
-                    <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-                        <ArrowLeft size={24} color="#000000" />
+                    <TouchableOpacity 
+                        style={styles.backButton} 
+                        onPress={handleBack}
+                        activeOpacity={0.7}
+                    >
+                        <View style={styles.backButtonInner}>
+                            <X size={20} color="#FFFFFF" strokeWidth={2.5} />
+                        </View>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.main}>
                     <Text style={styles.title}>
-                        Turf Identifier <Text style={styles.titleAccent}>System</Text> Verification
+                        <Text style={styles.titleAccent}>Turf Identifier System</Text>
+                        {'\n'}Verification
                     </Text>
 
                     <View style={styles.iconContainer}>
-                        <View style={styles.iconBackground}>
+                        <View style={styles.iconWrapper}>
                             <Mail size={64} color="#000000" strokeWidth={1.5} />
                             <View style={styles.checkmarkBadge}>
                                 <CheckCircle size={28} color="#34C759" fill="#34C759" />
@@ -38,8 +42,16 @@ export const VerificationScreen = () => {
                     </View>
 
                     <Text style={styles.description}>
-                        Please verify your email to proceed to the dashboard
+                        Please verify your email to proceed to the dashboard.
                     </Text>
+
+                    <TouchableOpacity 
+                        style={styles.continueButton}
+                        onPress={handleContinue}
+                        activeOpacity={0.8}
+                    >
+                        <Text style={styles.continueButtonText}>Continue</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
@@ -62,11 +74,19 @@ const styles = StyleSheet.create({
     backButton: {
         width: 44,
         height: 44,
+    },
+    backButtonInner: {
+        width: 44,
+        height: 44,
         borderRadius: 22,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     main: {
         flex: 1,
@@ -84,25 +104,52 @@ const styles = StyleSheet.create({
     },
     titleAccent: {
         color: '#BFFF00',
+        fontWeight: '700',
     },
     iconContainer: {
         marginBottom: 32,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    iconBackground: {
+    iconWrapper: {
         position: 'relative',
-        padding: 20,
+        width: 120,
+        height: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     checkmarkBadge: {
         position: 'absolute',
-        bottom: 15,
-        right: 10,
+        bottom: 5,
+        right: 5,
         backgroundColor: '#FFFFFF',
         borderRadius: 14,
+        width: 28,
+        height: 28,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     description: {
         fontSize: 14,
         color: '#8E8E93',
         textAlign: 'center',
         lineHeight: 20,
+        paddingHorizontal: 24,
+        marginBottom: 48,
+    },
+    continueButton: {
+        width: '100%',
+        height: 56,
+        backgroundColor: '#1C1C1E',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 24,
+    },
+    continueButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#FFFFFF',
+        letterSpacing: 0.5,
     },
 });

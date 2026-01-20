@@ -1,44 +1,62 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { ArrowLeft, Check, Eye, EyeOff } from 'lucide-react-native';
-import { usePagerNavigation } from '../navigation/PagerNavigationContext';
+import { View, Text, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, TouchableOpacity, TextInput } from 'react-native';
+import { X, Check, Eye, EyeOff } from 'lucide-react-native';
 
-export const SignupScreen = () => {
+export const SignupScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const { scrollToScreen, screens } = usePagerNavigation();
 
     const handleSignup = () => {
-        scrollToScreen(screens.VERIFICATION);
+        navigation?.navigate('Verification');
+    };
+
+    const handleGoogleSignIn = () => {
+        navigation?.navigate('Verification');
     };
 
     const handleLogin = () => {
-        scrollToScreen(screens.SIGN_IN);
+        navigation?.navigate('SignIn');
     };
 
     const handleBack = () => {
-        scrollToScreen(screens.HOME);
+        navigation?.goBack();
     };
 
+    const isUsernameValid = username.length > 3;
+    const isEmailValid = email.includes('@') && email.includes('.');
+    const isPasswordValid = password.length > 6;
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.content}
+            >
             <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-                    <ArrowLeft size={24} color="#000000" />
+                    <TouchableOpacity 
+                        style={styles.backButton} 
+                        onPress={handleBack}
+                        activeOpacity={0.7}
+                    >
+                        <View style={styles.backButtonInner}>
+                            <X size={20} color="#FFFFFF" strokeWidth={2.5} />
+                        </View>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.main}>
-                <Text style={styles.title}>
-                    Create <Text style={styles.titleAccent}>your account</Text>
-                </Text>
+                <Text style={styles.title}>Create your account</Text>
 
-                <TouchableOpacity style={styles.googleButton} onPress={handleSignup}>
-                    <View style={styles.googleIconContainer}>
-                        <Text style={styles.googleIcon}>G</Text>
-                    </View>
+                    <TouchableOpacity 
+                        style={styles.googleButton}
+                        onPress={handleGoogleSignIn}
+                        activeOpacity={0.8}
+                    >
+                        <View style={styles.googleIcon}>
+                            <Text style={styles.googleG}>G</Text>
+                        </View>
                     <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
                 </TouchableOpacity>
 
@@ -48,57 +66,75 @@ export const SignupScreen = () => {
                     <View style={styles.dividerLine} />
                 </View>
 
+                    <View style={styles.inputSection}>
+                        <Text style={styles.label}>USERNAME</Text>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>USERNAME</Text>
-                    <View style={styles.inputWrapper}>
                         <TextInput
                             style={styles.input}
+                                placeholder=""
+                                placeholderTextColor="#C7C7CC"
                             value={username}
                             onChangeText={setUsername}
-                            placeholderTextColor="#C7C7CC"
+                                autoCapitalize="none"
                         />
-                        {username.length > 3 && (
-                            <Check size={20} color="#34C759" />
+                            {isUsernameValid && (
+                                <Check size={20} color="#34C759" style={styles.checkIcon} />
                         )}
                     </View>
                 </View>
 
+                    <View style={styles.inputSection}>
+                        <Text style={styles.label}>EMAIL</Text>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>EMAIL</Text>
-                    <View style={styles.inputWrapper}>
                         <TextInput
                             style={styles.input}
+                                placeholder=""
+                                placeholderTextColor="#C7C7CC"
                             value={email}
                             onChangeText={setEmail}
-                            placeholderTextColor="#C7C7CC"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
                         />
-                        {email.includes('@') && (
-                            <Check size={20} color="#34C759" />
+                            {isEmailValid && (
+                                <Check size={20} color="#34C759" style={styles.checkIcon} />
                         )}
                     </View>
                 </View>
 
-                <View style={styles.inputContainer}>
+                    <View style={styles.inputSection}>
                     <Text style={styles.label}>PASSWORD</Text>
-                    <View style={styles.inputWrapper}>
+                        <View style={styles.passwordContainer}>
                         <TextInput
-                            style={styles.inputPassword}
+                                style={styles.passwordInput}
+                                placeholder=""
+                                placeholderTextColor="#C7C7CC"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry={!showPassword}
-                            placeholderTextColor="#C7C7CC"
-                        />
-                        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                            />
+                            <View style={styles.passwordIcons}>
+                                {isPasswordValid && (
+                                    <Check size={20} color="#34C759" style={styles.checkIcon} />
+                                )}
+                                <TouchableOpacity 
+                                    onPress={() => setShowPassword(!showPassword)}
+                                    style={styles.passwordToggle}
+                                >
                             {showPassword ? (
                                 <EyeOff size={20} color="#8E8E93" />
                             ) : (
                                 <Eye size={20} color="#8E8E93" />
                             )}
                         </TouchableOpacity>
+                            </View>
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+                    <TouchableOpacity 
+                        style={styles.signupButton}
+                        onPress={handleSignup}
+                        activeOpacity={0.8}
+                    >
                     <Text style={styles.signupButtonText}>SIGN UP</Text>
                 </TouchableOpacity>
             </View>
@@ -110,7 +146,8 @@ export const SignupScreen = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-        </View>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 };
 
@@ -118,6 +155,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
+    },
+    content: {
+        flex: 1,
         paddingHorizontal: 24,
     },
     header: {
@@ -127,25 +167,30 @@ const styles = StyleSheet.create({
     backButton: {
         width: 44,
         height: 44,
+    },
+    backButtonInner: {
+        width: 44,
+        height: 44,
         borderRadius: 22,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
         elevation: 3,
     },
     main: {
         flex: 1,
+        paddingTop: 8,
     },
     title: {
         fontSize: 28,
         fontWeight: '700',
         color: '#000000',
-        textAlign: 'center',
         marginBottom: 32,
-    },
-    titleAccent: {
-        color: '#BFFF00',
+        textAlign: 'left',
     },
     googleButton: {
         height: 56,
@@ -157,20 +202,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 24,
+        paddingHorizontal: 16,
     },
-    googleIconContainer: {
-        width: 20,
-        height: 20,
-        borderRadius: 10,
+    googleIcon: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
         backgroundColor: '#4285F4',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
     },
-    googleIcon: {
-        color: '#FFFFFF',
-        fontSize: 12,
+    googleG: {
+        fontSize: 14,
         fontWeight: '700',
+        color: '#FFFFFF',
     },
     googleText: {
         fontSize: 14,
@@ -193,8 +239,9 @@ const styles = StyleSheet.create({
         color: '#8E8E93',
         marginHorizontal: 12,
         letterSpacing: 0.5,
+        fontWeight: '500',
     },
-    inputContainer: {
+    inputSection: {
         marginBottom: 20,
     },
     label: {
@@ -203,8 +250,9 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         letterSpacing: 0.5,
         fontWeight: '500',
+        textTransform: 'uppercase',
     },
-    inputWrapper: {
+    inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 1,
@@ -212,15 +260,31 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        paddingVertical: 12,
         fontSize: 16,
         color: '#000000',
+        paddingVertical: 12,
     },
-    inputPassword: {
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#E5E5EA',
+    },
+    passwordInput: {
         flex: 1,
-        paddingVertical: 12,
         fontSize: 16,
         color: '#000000',
+        paddingVertical: 12,
+    },
+    passwordIcons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    checkIcon: {
+        marginRight: 8,
+    },
+    passwordToggle: {
+        padding: 4,
     },
     signupButton: {
         height: 56,

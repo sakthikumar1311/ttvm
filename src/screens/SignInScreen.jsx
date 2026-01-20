@@ -1,46 +1,56 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react-native';
-import { usePagerNavigation } from '../navigation/PagerNavigationContext';
+import { View, Text, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, TouchableOpacity, TextInput } from 'react-native';
+import { X, Eye, EyeOff } from 'lucide-react-native';
 
-export const SignInScreen = () => {
+export const SignInScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const { scrollToScreen, screens } = usePagerNavigation();
 
     const handleLogin = () => {
-        scrollToScreen(screens.HOME_HERO);
+        navigation?.navigate('Main');
+    };
+
+    const handleGoogleSignIn = () => {
+        navigation?.navigate('Main');
     };
 
     const handleSignUp = () => {
-        scrollToScreen(screens.SIGN_UP);
+        navigation?.navigate('SignUp');
     };
 
     const handleBack = () => {
-        scrollToScreen(screens.HOME);
+        navigation?.goBack();
     };
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.content}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.content}
+            >
                 <View style={styles.header}>
-                    <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-                        <ArrowLeft size={24} color="#000000" />
+                    <TouchableOpacity 
+                        style={styles.backButton} 
+                        onPress={handleBack}
+                        activeOpacity={0.7}
+                    >
+                        <View style={styles.backButtonInner}>
+                            <X size={20} color="#FFFFFF" strokeWidth={2.5} />
+                        </View>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.main}>
-                    <Text style={styles.title}>
-                        Welcome <Text style={styles.titleAccent}>Back!</Text>
-                    </Text>
+                    <Text style={styles.title}>Welcome Back!</Text>
 
-                    <TouchableOpacity
+                    <TouchableOpacity 
                         style={styles.googleButton}
-                        onPress={handleLogin}
+                        onPress={handleGoogleSignIn}
+                        activeOpacity={0.8}
                     >
-                        <View style={styles.googleIconContainer}>
-                            <Text style={styles.googleIcon}>G</Text>
+                        <View style={styles.googleIcon}>
+                            <Text style={styles.googleG}>G</Text>
                         </View>
                         <Text style={styles.googleText}>CONTINUE WITH GOOGLE</Text>
                     </TouchableOpacity>
@@ -51,29 +61,34 @@ export const SignInScreen = () => {
                         <View style={styles.dividerLine} />
                     </View>
 
-                    <View style={styles.inputContainer}>
+                    <View style={styles.inputSection}>
                         <Text style={styles.label}>EMAIL</Text>
                         <TextInput
                             style={styles.input}
-                            value={email}
-                            onChangeText={setEmail}
                             placeholder=""
                             placeholderTextColor="#C7C7CC"
+                            value={email}
+                            onChangeText={setEmail}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
                         />
                     </View>
 
-                    <View style={styles.inputContainer}>
+                    <View style={styles.inputSection}>
                         <Text style={styles.label}>PASSWORD</Text>
-                        <View style={styles.passwordWrapper}>
+                        <View style={styles.passwordContainer}>
                             <TextInput
                                 style={styles.passwordInput}
+                                placeholder=""
+                                placeholderTextColor="#C7C7CC"
                                 value={password}
                                 onChangeText={setPassword}
                                 secureTextEntry={!showPassword}
-                                placeholder=""
-                                placeholderTextColor="#C7C7CC"
                             />
-                            <TouchableOpacity style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
+                            <TouchableOpacity 
+                                onPress={() => setShowPassword(!showPassword)}
+                                style={styles.passwordToggle}
+                            >
                                 {showPassword ? (
                                     <EyeOff size={20} color="#8E8E93" />
                                 ) : (
@@ -83,9 +98,10 @@ export const SignInScreen = () => {
                         </View>
                     </View>
 
-                    <TouchableOpacity
+                    <TouchableOpacity 
                         style={styles.loginButton}
                         onPress={handleLogin}
+                        activeOpacity={0.8}
                     >
                         <Text style={styles.loginButtonText}>LOG IN</Text>
                     </TouchableOpacity>
@@ -97,12 +113,12 @@ export const SignInScreen = () => {
 
                 <View style={styles.footer}>
                     <TouchableOpacity onPress={handleSignUp}>
-                        <Text style={styles.footerText}>
-                            CREATE NEW ACCOUNT <Text style={styles.footerLink}>SIGN UP</Text>
+                        <Text style={styles.signupText}>
+                            CREATE NEW ACCOUNT <Text style={styles.signupLink}>SIGN UP</Text>
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
@@ -123,8 +139,12 @@ const styles = StyleSheet.create({
     backButton: {
         width: 44,
         height: 44,
+    },
+    backButtonInner: {
+        width: 44,
+        height: 44,
         borderRadius: 22,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#000000',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
@@ -135,16 +155,14 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
+        paddingTop: 8,
     },
     title: {
         fontSize: 28,
         fontWeight: '700',
         color: '#000000',
-        textAlign: 'center',
         marginBottom: 32,
-    },
-    titleAccent: {
-        color: '#BFFF00',
+        textAlign: 'left',
     },
     googleButton: {
         height: 56,
@@ -156,20 +174,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 24,
+        paddingHorizontal: 16,
     },
-    googleIconContainer: {
-        width: 20,
-        height: 20,
-        borderRadius: 10,
+    googleIcon: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
         backgroundColor: '#4285F4',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
     },
-    googleIcon: {
-        color: '#FFFFFF',
-        fontSize: 12,
+    googleG: {
+        fontSize: 14,
         fontWeight: '700',
+        color: '#FFFFFF',
     },
     googleText: {
         fontSize: 14,
@@ -192,8 +211,9 @@ const styles = StyleSheet.create({
         color: '#8E8E93',
         marginHorizontal: 12,
         letterSpacing: 0.5,
+        fontWeight: '500',
     },
-    inputContainer: {
+    inputSection: {
         marginBottom: 20,
     },
     label: {
@@ -202,15 +222,16 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         letterSpacing: 0.5,
         fontWeight: '500',
+        textTransform: 'uppercase',
     },
     input: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#E5E5EA',
-        paddingVertical: 12,
         fontSize: 16,
         color: '#000000',
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#E5E5EA',
     },
-    passwordWrapper: {
+    passwordContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 1,
@@ -218,12 +239,12 @@ const styles = StyleSheet.create({
     },
     passwordInput: {
         flex: 1,
-        paddingVertical: 12,
         fontSize: 16,
         color: '#000000',
+        paddingVertical: 12,
     },
-    eyeButton: {
-        padding: 8,
+    passwordToggle: {
+        padding: 4,
     },
     loginButton: {
         height: 56,
@@ -235,29 +256,29 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     loginButtonText: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
         color: '#FFFFFF',
         letterSpacing: 0.5,
     },
     forgotPassword: {
         alignItems: 'center',
-        paddingVertical: 12,
+        padding: 12,
     },
     forgotPasswordText: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#8E8E93',
     },
     footer: {
         paddingBottom: 32,
         alignItems: 'center',
     },
-    footerText: {
+    signupText: {
         fontSize: 13,
         color: '#8E8E93',
         letterSpacing: 0.3,
     },
-    footerLink: {
+    signupLink: {
         color: '#000000',
         fontWeight: '600',
     },

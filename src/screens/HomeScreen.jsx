@@ -1,54 +1,49 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView, Image } from 'react-native';
-import { Search, Calendar, User } from 'lucide-react-native';
-import { COLORS, SPACING, SIZES } from '../constants/theme';
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Home, Search, Calendar, User } from 'lucide-react-native';
 
 export const HomeScreen = ({ navigation }) => {
     return (
         <ImageBackground
-            source={{ uri: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800' }}
+            source={{ uri: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80' }}
             style={styles.background}
             resizeMode="cover"
         >
             <SafeAreaView style={styles.container}>
                 <View style={styles.content}>
                     <View style={styles.main}>
-                        <View style={styles.overlay}>
+                        <View style={styles.textContainer}>
                             <Text style={styles.title}>
-                                Wherever You Play, Your{'\n'}
-                                <Text style={styles.titleAccent}>Health Defines Your Game.</Text>
+                                Wherever You Play, Your{' '}
+                                <Text style={styles.titleAccent}>Health</Text>
+                                {' '}Defines Your Game.
                             </Text>
                             <Text style={styles.subtitle}>
-                                Every match counts toward a healthier life.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                             </Text>
                         </View>
                     </View>
 
                     <View style={styles.bottomNav}>
-                        <View style={styles.navItem}>
-                            <View style={styles.navButton}>
-                                <Image source={require('../assets/home.png')} style={{ width: 24, height: 24 }} />
+                        <TouchableOpacity style={styles.navItemActive}>
+                            <View style={styles.activeTab}>
+                                <Home size={22} color="#000000" />
                             </View>
-                            <Text style={styles.navLabel}>Home</Text>
-                        </View>
+                            <Text style={styles.navLabelActive}>Home</Text>
+                        </TouchableOpacity>
 
-                        <View style={styles.navItem}>
-                            <View style={styles.navButtonInactive}>
-                                <Search size={24} color={COLORS.text} />
-                            </View>
-                        </View>
+                        <TouchableOpacity style={styles.navItem}>
+                            <Search size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
 
-                        <View style={styles.navItem}>
-                            <View style={styles.navButtonInactive}>
-                                <Calendar size={24} color={COLORS.text} />
-                            </View>
-                        </View>
+                        <TouchableOpacity style={styles.navItem}>
+                            <Calendar size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
 
-                        <View style={styles.navItem}>
-                            <View style={styles.navButtonInactive}>
-                                <User size={24} color={COLORS.text} />
-                            </View>
-                        </View>
+                        <TouchableOpacity style={styles.navItem}>
+                            <User size={22} color="#FFFFFF" />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </SafeAreaView>
@@ -64,64 +59,65 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
     },
     content: {
         flex: 1,
-        paddingHorizontal: SPACING.xxl,
+        paddingHorizontal: 24,
+        justifyContent: 'space-between',
     },
     main: {
         flex: 1,
         justifyContent: 'flex-end',
-        paddingBottom: SPACING.xxxl,
+        paddingBottom: 40,
     },
-    overlay: {
+    textContainer: {
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        padding: SPACING.xxl,
-        borderRadius: SIZES.radiusMedium,
+        padding: 20,
+        borderRadius: 12,
     },
     title: {
-        fontSize: SIZES.h2,
-        fontWeight: 'bold',
-        color: COLORS.text,
-        marginBottom: SPACING.md,
-        lineHeight: 32,
+        fontSize: 22,
+        fontWeight: '700',
+        color: '#000000',
+        lineHeight: 30,
+        marginBottom: 8,
     },
     titleAccent: {
-        color: COLORS.accent,
+        color: '#BFFF00',
+        fontWeight: '700',
     },
     subtitle: {
-        fontSize: SIZES.small,
-        color: COLORS.secondary,
-        lineHeight: 20,
+        fontSize: 13,
+        color: '#8E8E93',
+        lineHeight: 18,
+        marginTop: 4,
     },
     bottomNav: {
         flexDirection: 'row',
-        backgroundColor: COLORS.primary,
-        borderRadius: SIZES.radiusLarge,
-        paddingHorizontal: SPACING.lg,
-        paddingVertical: SPACING.md,
-        marginBottom: SPACING.xxl,
+        backgroundColor: '#1C1C1E',
+        borderRadius: 25,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        marginBottom: 24,
         justifyContent: 'space-around',
         alignItems: 'center',
     },
-    navItem: {
+    navItemActive: {
         alignItems: 'center',
     },
-    navButton: {
-        backgroundColor: COLORS.accent,
-        paddingHorizontal: SPACING.lg,
-        paddingVertical: SPACING.sm,
-        borderRadius: SIZES.radiusMedium,
+    navItem: {
+        padding: 8,
     },
-    navButtonInactive: {
-        paddingHorizontal: SPACING.lg,
-        paddingVertical: SPACING.sm,
+    activeTab: {
+        backgroundColor: '#BFFF00',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
     },
-    navLabel: {
-        fontSize: SIZES.tiny,
-        color: COLORS.white,
-        marginTop: SPACING.xs,
+    navLabelActive: {
+        fontSize: 11,
+        color: '#FFFFFF',
+        marginTop: 4,
         fontWeight: '500',
     },
 });
