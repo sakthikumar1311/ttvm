@@ -7,6 +7,7 @@ export const LocationPermissionScreen = ({ navigation }) => {
         navigation?.goBack();
     };
 
+    
     const handleEnable = () => {
         navigation?.navigate('Main');
     };
