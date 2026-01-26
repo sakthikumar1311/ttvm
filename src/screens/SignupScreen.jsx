@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
 
+  
   /* INPUTS */
   inputSection: {
     marginBottom: 20,
