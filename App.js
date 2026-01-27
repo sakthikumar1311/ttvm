@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { useFonts } from 'expo-font';
-import { Text } from 'react-native';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
