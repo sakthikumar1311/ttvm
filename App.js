@@ -6,7 +6,6 @@ import { AppNavigator } from './src/navigation/AppNavigator';
 import { useFonts } from 'expo-font';
 import { Text } from 'react-native';
 
-
 export default function App() {
   const [fontsLoaded] = useFonts({
     LatoRegular: require('./assets/fonts/Lato-Black.ttf'),
