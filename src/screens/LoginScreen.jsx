@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
     letterSpacing: 0.5,
   },
-  
   signupLink: {
     color: COLORS.text,
     fontWeight: '600',
