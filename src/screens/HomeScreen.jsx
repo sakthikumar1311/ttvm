@@ -84,7 +84,6 @@ export const HomeScreen = ({ navigation }) => {
               )}
             </TouchableOpacity>
 
-
             {/* STATS */}
             <TouchableOpacity
               style={activeTab === 'Stats' ? styles.activeTab : styles.iconOnly}
