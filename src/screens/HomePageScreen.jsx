@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 52,
   },
-
   playButton: {
     width: 76,
     height: 76,
