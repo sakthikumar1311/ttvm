@@ -241,8 +241,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 14,
     letterSpacing: 1,
   },
-
-  
   /* INPUTS */
   inputSection: {
     marginBottom: 20,
