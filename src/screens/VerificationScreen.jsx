@@ -11,7 +11,6 @@ export const VerificationScreen = ({ navigation }) => {
   const handleBack = () => {
     navigation?.goBack();
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
